@@ -17,7 +17,9 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  width: 100%;
 }
+
 body,
 input,
 button {
@@ -150,6 +152,8 @@ p {
   width: 520px;
   height: 28px;
   border-radius: 5px;
+  font-size: 20px;
+  padding: 5px;
 }
 
 .mainTem {
@@ -176,10 +180,31 @@ p {
   justify-content: left;
 }
 
+.mainInputRev {
+  width: 520px;
+  border-radius: 20px;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: 'BMJUA', Arial, sans-serif;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 440px;
+  padding: 10px; /* 내부 여백 */
+  resize: none; /* 크기 조절 불가능 */
+}
 /* 활성화된 버튼 스타일 */
 .activeButton {
   background-color: #007bff; /* 파란색 배경 */
   color: #fff; /* 흰색 텍스트 */
+}
+.notActiveButton {
+  width: 30%;
+  height: 60px;
+  font-size: 20px;
+  padding: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
 }
 
 /* 모달 배경 */
@@ -254,4 +279,55 @@ p {
 .productDescription {
   font-size: 14px;
   color: #555;
+}
+
+.productImageRev {
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.productNameRev {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 10px 0 5px;
+}
+
+.productPriceRev {
+  font-size: 18px;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.productDescriptionRev {
+  font-size: 20px;
+  color: #555;
+}
+
+.productRow {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.productDetails {
+  display: flex;
+  flex: 3;
+  flex-direction: row;
+  width: 40%;
+}
+
+.productInfo {
+  margin-left: 20px;
+}
+
+.revForm {
+  display: flex;
+  flex-direction: column;
+  justify-items: right;
+  align-items: right;
+  flex: 1;
 }
