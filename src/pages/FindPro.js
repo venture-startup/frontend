@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './style/style.css';
 import Navigator from '../components/navigator/Navigator';
 import apiClient from '../api/apiClient.js';
-
+import axios from 'axios';
 function ProductGrid() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
@@ -13,7 +13,9 @@ function ProductGrid() {
     // 서버에서 데이터를 가져온다고 가정
     const fetchData = async () => {
       try {
-        const response = await apiClient.get('/product'); // 요청 경로 설정
+        const response = await axios.get(
+          'https://venture.koyeb.app/product'
+        ); // 요청 경로 설정
         console.log(response);
       } catch (err) {
         console.error('Error fetching data:', err);
