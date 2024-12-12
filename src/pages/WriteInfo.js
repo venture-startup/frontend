@@ -37,7 +37,7 @@ function WriteInfo() {
     try {
       // POST 요청으로 서버에 데이터 전송
       const response = await axios.post(
-        'https://venture.koyeb.app/product',
+        `${process.env.REACT_APP_API_BASE_URL}/product`,
         productData,
         {
           headers: {

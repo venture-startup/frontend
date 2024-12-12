@@ -10,10 +10,13 @@ function ProductGrid() {
 
   // 서버에서 데이터 가져오기
   useEffect(() => {
+    console.log(
+      `${process.env.REACT_APP_API_BASE_URL}/product`
+    );
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          'https://venture.koyeb.app/product'
+          `${process.env.REACT_APP_API_BASE_URL}/product`
         ); // 요청 경로 설정
         setProducts(response.data); // 받은 데이터를 상태에 저장
       } catch (err) {

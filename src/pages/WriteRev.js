@@ -1,30 +1,102 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './style/style.css';
 import Navigator from '../components/navigator/Navigator';
+import axios from 'axios';
 
 function WriteRev() {
   const navigate = useNavigate();
   const location = useLocation();
   const product = location.state; // 이전 페이지에서 전달된 상품 정보
 
+  const [reviews, setReviews] = useState([]); // 리뷰 템플릿 데이터를 저장할 state
   const [showSingleInput, setShowSingleInput] =
     useState(false);
   const [isAiReviewActive, setIsAiReviewActive] =
     useState(false);
   const [showModal, setShowModal] = useState(false); // 모달 상태 추가
+  const [reviewText, setReviewText] = useState(''); // 텍스트 리뷰 상태
+  const [aiReviewAnswers, setAiReviewAnswers] = useState(
+    {}
+  ); // AI 리뷰 답변 상태
 
-  const handleNavigateClick = () => {
-    setShowModal(true); // 모달 표시
-    setTimeout(() => {
-      setShowModal(false); // 3초 후 모달 숨김
-      navigate('/'); // 페이지 이동
-    }, 3000);
-  };
+  // 랜덤 리뷰 템플릿을 서버에서 받아오는 useEffect
+  useEffect(() => {
+    if (product) {
+      const productId = product.id; // productId를 product에서 가져옴
+      const fetchReviews = async () => {
+        try {
+          const response = await axios.get(
+            `${process.env.REACT_APP_API_BASE_URL}/review/ai/${productId}`
+          );
+          setReviews(response.data); // 리뷰 데이터를 state에 저장
+        } catch (err) {
+          console.error('Error fetching reviews:', err);
+        }
+      };
 
+      fetchReviews();
+    }
+  }, [product]); // product가 변경될 때마다 리뷰 데이터를 다시 요청
+
+  // 리뷰 템플릿을 보여줄지 말지 결정하는 toggle 함수
   const toggleInput = () => {
     setShowSingleInput((prev) => !prev);
     setIsAiReviewActive((prev) => !prev);
+  };
+
+  // 리뷰 제출 후 페이지 이동
+  const handleNavigateClick = async () => {
+    setShowModal(true); // 모달 표시
+
+    try {
+      if (showSingleInput) {
+        // AI 리뷰 템플릿 데이터를 서버에 보낼 때
+        const questionAnswers = Object.keys(
+          aiReviewAnswers
+        ).map((question) => ({
+          question,
+          answer: aiReviewAnswers[question],
+        }));
+
+        const response = await axios.post(
+          `${process.env.REACT_APP_API_BASE_URL}/review/ai`,
+          { questionAnswers }
+        );
+        console.log('AI review response:', response.data);
+        setReviewText(response.data.reviewContent);
+        toggleInput();
+      } else {
+        // 텍스트 리뷰를 서버에 보낼 때
+        const response = await axios.post(
+          `${process.env.REACT_APP_API_BASE_URL}/review`,
+          {
+            productId: product.id,
+            text: reviewText,
+          }
+        );
+        console.log('Text review response:', response.data);
+        navigate('/');
+      }
+    } catch (err) {
+      console.error('Error submitting review:', err);
+    }
+    setTimeout(() => {
+      setShowModal(false); // 3초 후 모달 숨김
+    }, 3000);
+  };
+
+  // AI 리뷰 템플릿 입력값 변경 함수
+  const handleAiReviewChange = (question, answer) => {
+    setAiReviewAnswers((prev) => ({
+      ...prev,
+      [question]: answer,
+    }));
+  };
+
+  // 텍스트 리뷰 입력값 변경 함수
+  const handleReviewTextChange = (e) => {
+    setReviewText(e.target.value);
   };
 
   return (
@@ -66,65 +138,56 @@ function WriteRev() {
 
           <div>
             {showSingleInput ? (
+              // 서버에서 받아온 리뷰 템플릿을 동적으로 렌더링
               <>
-                <div className="revDiv">
-                  <p className="subTitle">안정성</p>
-                  <input
-                    className="revTem"
-                    placeholder="안정성에 대한 리뷰를 작성하세요."
-                  />
-                </div>
-                <div className="revDiv">
-                  <p className="subTitle">성능</p>
-                  <input
-                    className="revTem"
-                    placeholder="성능에 대한 리뷰를 작성하세요."
-                  />
-                </div>
-                <div className="revDiv">
-                  <p className="subTitle">색감 및 디자인</p>
-                  <input
-                    className="revTem"
-                    placeholder="색감 및 디자인에 대한 리뷰를 작성하세요."
-                  />
-                </div>
-                <div className="revDiv">
-                  <p className="subTitle">편안함</p>
-                  <input
-                    className="revTem"
-                    placeholder="편안함에 대한 리뷰를 작성하세요."
-                  />
-                </div>
-                <div className="revDiv">
-                  <p className="subTitle">재구매 의사</p>
-                  <input
-                    className="revTem"
-                    placeholder="재구매 의사에 대한 리뷰를 작성하세요."
-                  />
-                </div>
-                <div className="revDiv">
-                  <p className="subTitle">가성비</p>
-                  <input
-                    className="revTem"
-                    placeholder="가성비에 대한 리뷰를 작성하세요."
-                  />
-                </div>
+                {reviews.map((review, index) => (
+                  <div key={index} className="revDiv">
+                    <p className="subTitle">
+                      {review.question}
+                    </p>
+                    <input
+                      className="revTem"
+                      value={
+                        aiReviewAnswers[review.question] ||
+                        ''
+                      }
+                      onChange={(e) =>
+                        handleAiReviewChange(
+                          review.question,
+                          e.target.value
+                        )
+                      }
+                      placeholder={review.question} // 리뷰 항목에 맞는 placeholder
+                    />
+                  </div>
+                ))}
               </>
             ) : (
               <textarea
                 className="mainInputRev"
                 placeholder="리뷰를 작성하세요!"
+                value={reviewText}
+                onChange={handleReviewTextChange}
               />
             )}
           </div>
 
           <div className="temButtonDiv">
-            <button
-              className="mainButton"
-              onClick={handleNavigateClick}
-            >
-              리뷰 작성!
-            </button>
+            {showSingleInput ? (
+              <button
+                className="mainButton"
+                onClick={handleNavigateClick}
+              >
+                AI 리뷰 생성!
+              </button>
+            ) : (
+              <button
+                className="mainButton"
+                onClick={handleNavigateClick}
+              >
+                리뷰 작성!
+              </button>
+            )}
           </div>
 
           {/* 모달 렌더링 */}

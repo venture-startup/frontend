@@ -24,7 +24,7 @@ function MakeTem() {
       const fetchReviews = async () => {
         try {
           const response = await axios.get(
-            `https://venture.koyeb.app/review/ai/${productId}`
+            `${process.env.REACT_APP_API_BASE_URL}/review/ai/${productId}`
           );
           setReviews(response.data); // 리뷰 데이터를 state에 저장
         } catch (err) {
