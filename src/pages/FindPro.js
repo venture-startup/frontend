@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './style/style.css';
 import Navigator from '../components/navigator/Navigator';
+import apiClient from '../api/apiClient.js';
+
 function ProductGrid() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
@@ -10,24 +12,13 @@ function ProductGrid() {
   useEffect(() => {
     // 서버에서 데이터를 가져온다고 가정
     const fetchData = async () => {
-      const exampleData = [
-        {
-          id: 1,
-          name: '상품 1',
-          price: '1000원',
-          image: '/images/image1.png',
-          description: '상품 1 설명',
-        },
-        {
-          id: 2,
-          name: '상품 2',
-          price: '2000원',
-          image: '/images/image2.png',
-          description: '상품 2 설명',
-        },
-        // 추가 상품 데이터
-      ];
-      setProducts(exampleData);
+      try {
+        const response = await apiClient.get('/product'); // 요청 경로 설정
+        console.log(response);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      } finally {
+      }
     };
 
     fetchData();
@@ -41,26 +32,10 @@ function ProductGrid() {
   return (
     <div className="main">
       <Navigator></Navigator>
-      <div className="productGrid">
+      {/* <div className="productGrid">
         {products.map((product) => (
-          <div
-            key={product.id}
-            className="productCard"
-            onClick={() => handleProductClick(product)}
-          >
-            <img
-              src={product.image}
-              alt={product.name}
-              className="productImage"
-            />
-            <h3 className="productName">{product.name}</h3>
-            <p className="productPrice">{product.price}</p>
-            <p className="productDescription">
-              {product.description}
-            </p>
-          </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }

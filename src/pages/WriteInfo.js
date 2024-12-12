@@ -9,10 +9,8 @@ function WriteInfo() {
   // 상태 관리
   const [productName, setProductName] = useState('');
   const [productPrice, setProductPrice] = useState('');
-  const [productDescription, setProductDescription] =
-    useState('');
-  const [fileName, setFileName] =
-    useState('파일을 선택하세요');
+  const [productDescription, setProductDescription] = useState('');
+  const [fileName, setFileName] = useState('파일을 선택하세요');
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -40,13 +38,13 @@ function WriteInfo() {
       <div className="mainInfo">
         <div>
           <p className="subTitle">
-            저희 서비스에서는 회사에서 판매하고 있는 제품
-            설명을 등록하면<br></br> AI가 제품 설명을 읽고
-            분석하여 태그에 맞게 리뷰 템플릿을 작성해줍니다.
+            저희 서비스에서는 회사에서 판매하고 있는 제품 설명을 등록하면
+            <br></br> AI가 제품 설명을 읽고 분석하여 태그에 맞게 리뷰 템플릿을
+            작성해줍니다.
             <br></br>
-            해당 리뷰 템플릿을 유저가 리뷰를 쉽게 작성하도록
-            도와주고, <br></br>랜덤으로 특징을 뽑아서 리뷰를
-            작성하기에 여러 리뷰를 뽑아 낼 수 있습니다.
+            해당 리뷰 템플릿을 유저가 리뷰를 쉽게 작성하도록 도와주고, <br></br>
+            랜덤으로 특징을 뽑아서 리뷰를 작성하기에 여러 리뷰를 뽑아 낼 수
+            있습니다.
           </p>
           <ImageScroll />
         </div>
@@ -58,9 +56,7 @@ function WriteInfo() {
                 type="text"
                 className="productInput"
                 value={productName}
-                onChange={(e) =>
-                  setProductName(e.target.value)
-                }
+                onChange={(e) => setProductName(e.target.value)}
                 placeholder="제품명을 입력하세요"
               />
             </div>
@@ -70,9 +66,7 @@ function WriteInfo() {
                 type="text"
                 className="productInput"
                 value={productPrice}
-                onChange={(e) =>
-                  setProductPrice(e.target.value)
-                }
+                onChange={(e) => setProductPrice(e.target.value)}
                 placeholder="제품 가격을 입력하세요"
               />
             </div>
@@ -89,10 +83,7 @@ function WriteInfo() {
             />
             {/* 커스텀 버튼 */}
             <div className="row">
-              <label
-                htmlFor="fileInput"
-                className="customFileButton"
-              >
+              <label htmlFor="fileInput" className="customFileButton">
                 파일 업로드
               </label>
               <p className="fileName">{fileName}</p>
@@ -103,17 +94,12 @@ function WriteInfo() {
             <textarea
               className="mainInput"
               value={productDescription}
-              onChange={(e) =>
-                setProductDescription(e.target.value)
-              }
+              onChange={(e) => setProductDescription(e.target.value)}
               placeholder="제품 설명을 입력하세요"
             ></textarea>
           </div>
           <div className="buttonDiv">
-            <button
-              className="mainButton"
-              onClick={handleButtonClick}
-            >
+            <button className="mainButton" onClick={handleButtonClick}>
               리뷰 템플릿 만들기
             </button>
           </div>
