@@ -62,34 +62,13 @@ button {
 
 .productInput {
   width: 100%;
-  min-width: 450px;
+  min-width: 250px;
   height: 30px;
   border-radius: 8px;
   font-size: 20px;
   padding: 3px;
   margin-top: 5px;
   margin-bottom: 10px;
-}
-
-@media (max-width: 1200px) {
-  /* 1200px 이하의 화면 크기에서 적용할 스타일 */
-  .productInput {
-    min-width: 350px;
-  }
-}
-
-@media (max-width: 800px) {
-  /* 800px 이하의 화면 크기에서 적용할 스타일 */
-  .productInput {
-    min-width: 200px;
-  }
-}
-
-@media (max-width: 600px) {
-  /* 600px 이하의 화면 크기에서 적용할 스타일 */
-  .productInput {
-    min-width: 150px;
-  }
 }
 
 .productInfo2 {
@@ -104,7 +83,7 @@ button {
   font-family: 'BMJUA', Arial, sans-serif;
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 100%;
+  width: 80%;
   height: 500px;
   padding: 10px; /* 내부 여백 */
   resize: none; /* 크기 조절 불가능 */
