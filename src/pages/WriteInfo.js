@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './style/style.css';
 import ImageScroll from '../components/image/Image';
 import Navigator from '../components/navigator/Navigator';
+import axios from 'axios';
 import apiClient from '../api/apiClient';
 
 function WriteInfo() {
@@ -13,7 +14,7 @@ function WriteInfo() {
   const [productPrice, setProductPrice] = useState('');
   const [productDescription, setProductDescription] =
     useState('');
-  const [selectedImage, setSelectedImage] = useState(null); // Add state to manage the selected image
+  const [selectedImage, setSelectedImage] = useState(null); // 이미지 파일
   const [fileName, setFileName] =
     useState('파일을 선택하세요');
 
@@ -25,7 +26,6 @@ function WriteInfo() {
     }
   };
 
-  // 버튼 클릭 핸들러
   const handleButtonClick = async () => {
     if (
       productName.trim() === '' ||
@@ -37,22 +37,25 @@ function WriteInfo() {
       return;
     }
 
-    // productDto 데이터
+    // productDto 생성
     const productDto = {
       name: productName,
-      price: productPrice,
       description: productDescription,
+      price: productPrice,
     };
 
+    // FormData 생성
     const formData = new FormData();
     formData.append(
       'productDto',
-      JSON.stringify(productDto)
-    ); // JSON 문자열로 추가
-    formData.append('image', selectedImage); // 이미지 파일 추가
-    console.log('선택한 이미지', selectedImage);
+      new Blob([JSON.stringify(productDto)], {
+        type: 'application/json',
+      })
+    ); // JSON을 Blob으로 추가
+    formData.append('image', selectedImage); // 이미지 추가
+
     try {
-      // POST 요청으로 서버에 데이터 전송
+      // Axios POST 요청
       const response = await apiClient.post(
         '/product',
         formData,
@@ -62,9 +65,12 @@ function WriteInfo() {
           },
         }
       );
+
+      console.log('Product created:', response.data);
       navigate('/MakeTem', { state: response.data });
-    } catch (err) {
-      console.error('Error sending product data:', err);
+    } catch (error) {
+      console.error('Error creating product:', error);
+      alert('서버 요청에 실패했습니다.');
     }
   };
 
@@ -121,7 +127,7 @@ function WriteInfo() {
               id="fileInput"
               accept="image/*"
               onChange={handleImageChange}
-              style={{ display: 'none' }} // 숨김 처리
+              style={{ display: 'none' }}
             />
             {/* 커스텀 버튼 */}
             <div className="row">
