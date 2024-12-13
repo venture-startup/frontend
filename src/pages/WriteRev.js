@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './style/style.css';
 import Navigator from '../components/navigator/Navigator';
-import axios from 'axios';
+import apiClient from '../api/apiClient';
 
 function WriteRev() {
   const navigate = useNavigate();
@@ -10,15 +10,11 @@ function WriteRev() {
   const product = location.state; // 이전 페이지에서 전달된 상품 정보
 
   const [reviews, setReviews] = useState([]); // 리뷰 템플릿 데이터를 저장할 state
-  const [showSingleInput, setShowSingleInput] =
-    useState(false);
-  const [isAiReviewActive, setIsAiReviewActive] =
-    useState(false);
+  const [showSingleInput, setShowSingleInput] = useState(false);
+  const [isAiReviewActive, setIsAiReviewActive] = useState(false);
   const [showModal, setShowModal] = useState(false); // 모달 상태 추가
   const [reviewText, setReviewText] = useState(''); // 텍스트 리뷰 상태
-  const [aiReviewAnswers, setAiReviewAnswers] = useState(
-    {}
-  ); // AI 리뷰 답변 상태
+  const [aiReviewAnswers, setAiReviewAnswers] = useState({}); // AI 리뷰 답변 상태
 
   // 랜덤 리뷰 템플릿을 서버에서 받아오는 useEffect
   useEffect(() => {
@@ -26,9 +22,7 @@ function WriteRev() {
       const productId = product.id; // productId를 product에서 가져옴
       const fetchReviews = async () => {
         try {
-          const response = await axios.get(
-            `${process.env.REACT_APP_API_BASE_URL}/review/ai/${productId}`
-          );
+          const response = await apiClient.get(`/review/ai/${productId}`);
           setReviews(response.data); // 리뷰 데이터를 state에 저장
         } catch (err) {
           console.error('Error fetching reviews:', err);
@@ -52,28 +46,24 @@ function WriteRev() {
     try {
       if (showSingleInput) {
         // AI 리뷰 템플릿 데이터를 서버에 보낼 때
-        const questionAnswers = Object.keys(
-          aiReviewAnswers
-        ).map((question) => ({
-          question,
-          answer: aiReviewAnswers[question],
-        }));
-
-        const response = await axios.post(
-          `${process.env.REACT_APP_API_BASE_URL}/review/ai`,
-          { questionAnswers }
+        const questionAnswers = Object.keys(aiReviewAnswers).map(
+          (question) => ({
+            question,
+            answer: aiReviewAnswers[question],
+          }),
         );
+
+        const response = await apiClient.post(`/review/ai`, {
+          questionAnswers,
+        });
         setReviewText(response.data.reviewContent);
         toggleInput();
       } else {
         // 텍스트 리뷰를 서버에 보낼 때
-        const response = await axios.post(
-          `${process.env.REACT_APP_API_BASE_URL}/review`,
-          {
-            productId: product.id,
-            text: reviewText,
-          }
-        );
+        const response = await apiClient.post(`/review`, {
+          productId: product.id,
+          text: reviewText,
+        });
         navigate('/');
       }
     } catch (err) {
@@ -110,15 +100,9 @@ function WriteRev() {
             className="productImageRev"
           />
           <div className="productInfo">
-            <h2 className="productNameRev">
-              {product.name}
-            </h2>
-            <p className="productPriceRev">
-              {product.price}
-            </p>
-            <p className="productDescriptionRev">
-              {product.description}
-            </p>
+            <h2 className="productNameRev">{product.name}</h2>
+            <p className="productPriceRev">{product.price}</p>
+            <p className="productDescriptionRev">{product.description}</p>
           </div>
         </div>
 
@@ -140,20 +124,12 @@ function WriteRev() {
               <>
                 {reviews.map((review, index) => (
                   <div key={index} className="revDiv">
-                    <p className="subTitle">
-                      {review.question}
-                    </p>
+                    <p className="subTitle">{review.question}</p>
                     <input
                       className="revTem"
-                      value={
-                        aiReviewAnswers[review.question] ||
-                        ''
-                      }
+                      value={aiReviewAnswers[review.question] || ''}
                       onChange={(e) =>
-                        handleAiReviewChange(
-                          review.question,
-                          e.target.value
-                        )
+                        handleAiReviewChange(review.question, e.target.value)
                       }
                       placeholder={review.question} // 리뷰 항목에 맞는 placeholder
                     />
@@ -172,17 +148,11 @@ function WriteRev() {
 
           <div className="temButtonDiv">
             {showSingleInput ? (
-              <button
-                className="mainButton"
-                onClick={handleNavigateClick}
-              >
+              <button className="mainButton" onClick={handleNavigateClick}>
                 AI 리뷰 생성!
               </button>
             ) : (
-              <button
-                className="mainButton"
-                onClick={handleNavigateClick}
-              >
+              <button className="mainButton" onClick={handleNavigateClick}>
                 리뷰 작성!
               </button>
             )}
@@ -191,9 +161,7 @@ function WriteRev() {
           {/* 모달 렌더링 */}
           {showModal && (
             <div className="modal">
-              <div className="modalContent">
-                리뷰 작성중입니다...
-              </div>
+              <div className="modalContent">리뷰 작성중입니다...</div>
             </div>
           )}
         </div>

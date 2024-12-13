@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './style/style.css';
 import Navigator from '../components/navigator/Navigator';
-import axios from 'axios';
+import apiClient from '../api/apiClient';
 
 function ProductGrid() {
   const [products, setProducts] = useState([]); // 상품 데이터를 저장할 state
@@ -12,9 +12,7 @@ function ProductGrid() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/product`
-        ); // 요청 경로 설정
+        const response = await apiClient.get(`/product`); // 요청 경로 설정
         setProducts(response.data); // 받은 데이터를 상태에 저장
       } catch (err) {
         console.error('Error fetching data:', err);
@@ -45,12 +43,8 @@ function ProductGrid() {
               className="productImage"
             />
             <h3 className="productName">{product.name}</h3>
-            <p className="productPrice">
-              {product.price.toLocaleString()} 원
-            </p>
-            <p className="productDescription">
-              {product.description}
-            </p>
+            <p className="productPrice">{product.price.toLocaleString()} 원</p>
+            <p className="productDescription">{product.description}</p>
           </div>
         ))}
       </div>
