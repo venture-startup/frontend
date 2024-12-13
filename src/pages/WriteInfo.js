@@ -32,8 +32,6 @@ function WriteInfo() {
       description: productDescription,
     };
 
-    console.log('Product Data:', productData); // 입력값 확인
-
     try {
       // POST 요청으로 서버에 데이터 전송
       const response = await axios.post(
@@ -44,10 +42,6 @@ function WriteInfo() {
             'Content-Type': 'application/json', // 요청 헤더 설정
           },
         }
-      );
-      console.log(
-        'Product data sent successfully:',
-        response.data
       );
       // 'response.data'는 서버에서 받아온 데이터입니다.
       navigate('/MakeTem', { state: response.data });

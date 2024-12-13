@@ -10,9 +10,6 @@ function ProductGrid() {
 
   // 서버에서 데이터 가져오기
   useEffect(() => {
-    console.log(
-      `${process.env.REACT_APP_API_BASE_URL}/product`
-    );
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -29,11 +26,7 @@ function ProductGrid() {
 
   // 클릭 시 해당 상품 정보로 이동
   const handleProductClick = (product) => {
-    navigate(
-      '/WriteRev',
-      { state: product },
-      console.log(product)
-    ); // 상품 정보를 상태로 전달
+    navigate('/WriteRev', { state: product }); // 상품 정보를 상태로 전달
   };
 
   return (

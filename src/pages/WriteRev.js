@@ -63,7 +63,6 @@ function WriteRev() {
           `${process.env.REACT_APP_API_BASE_URL}/review/ai`,
           { questionAnswers }
         );
-        console.log('AI review response:', response.data);
         setReviewText(response.data.reviewContent);
         toggleInput();
       } else {
@@ -75,7 +74,6 @@ function WriteRev() {
             text: reviewText,
           }
         );
-        console.log('Text review response:', response.data);
         navigate('/');
       }
     } catch (err) {
