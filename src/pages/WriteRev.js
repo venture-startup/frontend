@@ -131,7 +131,7 @@ function WriteRev() {
                       onChange={(e) =>
                         handleAiReviewChange(review.question, e.target.value)
                       }
-                      placeholder={review.question} // 리뷰 항목에 맞는 placeholder
+                      placeholder={review.question}
                     />
                   </div>
                 ))}
