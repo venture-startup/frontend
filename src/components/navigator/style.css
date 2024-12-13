@@ -29,3 +29,7 @@
   background-color: white;
   cursor: pointer;
 }
+
+.naviTitle.active {
+  font-weight: bold;
+}
