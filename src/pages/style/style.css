@@ -1,7 +1,6 @@
 @font-face {
-  font-family: 'BMJUA';
-  src: url('/public/fonts/otf/BMJUA_otf.otf')
-    format('opentype');
+  font-family: "BMJUA";
+  src: url("/public/fonts/otf/BMJUA_otf.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
@@ -23,7 +22,7 @@
 body,
 input,
 button {
-  font-family: 'BMJUA', Arial, sans-serif;
+  font-family: "BMJUA", Arial, sans-serif;
 }
 
 .main {
@@ -80,7 +79,7 @@ button {
   border-radius: 20px;
   font-size: 20px;
   font-weight: 500;
-  font-family: 'BMJUA', Arial, sans-serif;
+  font-family: "BMJUA", Arial, sans-serif;
   margin-top: 10px;
   margin-bottom: 10px;
   width: 100%;
@@ -140,6 +139,29 @@ p {
   color: #555;
 }
 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 /* MakeTem */
 
 .revDiv {
@@ -185,7 +207,7 @@ p {
   border-radius: 20px;
   font-size: 20px;
   font-weight: 500;
-  font-family: 'BMJUA', Arial, sans-serif;
+  font-family: "BMJUA", Arial, sans-serif;
   margin-top: 10px;
   margin-bottom: 10px;
   height: 440px;
@@ -234,10 +256,7 @@ p {
 /*제품 품목*/
 .productGrid {
   display: grid;
-  grid-template-columns: repeat(
-    5,
-    1fr
-  ); /* 가로 5개씩 배치 */
+  grid-template-columns: repeat(5, 1fr); /* 가로 5개씩 배치 */
   gap: 20px; /* 카드 간격 */
   padding: 20px;
 }
