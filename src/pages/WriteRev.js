@@ -10,6 +10,7 @@ function WriteRev() {
   const product = location.state; // 이전 페이지에서 전달된 상품 정보
 
   const [reviews, setReviews] = useState([]); // 리뷰 템플릿 데이터를 저장할 state
+  const [productReviews, setProductReviews] = useState([]); // 기존 리뷰 데이터를 저장할 state
   const [showSingleInput, setShowSingleInput] = useState(false);
   const [isAiReviewActive, setIsAiReviewActive] = useState(false);
   const [showModal, setShowModal] = useState(false); // 모달 상태 추가
@@ -20,6 +21,7 @@ function WriteRev() {
   useEffect(() => {
     if (product) {
       const productId = product.id; // productId를 product에서 가져옴
+
       const fetchReviews = async () => {
         try {
           const response = await apiClient.get(`/review/ai/${productId}`);
@@ -29,7 +31,17 @@ function WriteRev() {
         }
       };
 
+      const fetchProductReviews = async () => {
+        try {
+          const response = await apiClient.get(`/review/${productId}`);
+          setProductReviews(response.data); // 기존 리뷰 데이터를 state에 저장
+        } catch (err) {
+          console.error("Error fetching product reviews:", err);
+        }
+      };
+
       fetchReviews();
+      fetchProductReviews();
     }
   }, [product]); // product가 변경될 때마다 리뷰 데이터를 다시 요청
 
@@ -165,6 +177,23 @@ function WriteRev() {
             </div>
           )}
         </div>
+      </div>
+
+      {/* 기존 리뷰 내역 표시 */}
+      <div className="existingReviews">
+        <h3>기존 리뷰</h3>
+        {productReviews.length > 0 ? (
+          productReviews.map((review, index) => (
+            <div key={index} className="reviewItem">
+              <p className="reviewText">{review.text}</p>
+              <p className="reviewDate">
+                {new Date(review.createdAt).toLocaleDateString()}
+              </p>
+            </div>
+          ))
+        ) : (
+          <p className="noReviews">등록된 리뷰가 없습니다.</p>
+        )}
       </div>
     </div>
   );

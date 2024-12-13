@@ -350,3 +350,44 @@ p {
   align-items: right;
   flex: 1;
 }
+
+/* 기존 리뷰 내역 컨테이너 스타일 */
+.existingReviews {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.existingReviews h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* 개별 리뷰 항목 스타일 */
+.reviewItem {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.reviewText {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.reviewDate {
+  font-size: 14px;
+  color: #777;
+  text-align: right;
+}
+
+.noReviews {
+  font-size: 16px;
+  color: #999;
+  text-align: center;
+  margin-top: 10px;
+}
