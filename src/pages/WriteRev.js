@@ -34,6 +34,7 @@ function WriteRev() {
       const fetchProductReviews = async () => {
         try {
           const response = await apiClient.get(`/review/${productId}`);
+          console.log(response.data);
           setProductReviews(response.data); // 기존 리뷰 데이터를 state에 저장
         } catch (err) {
           console.error("Error fetching product reviews:", err);
@@ -184,11 +185,13 @@ function WriteRev() {
         <h3>기존 리뷰</h3>
         {productReviews.length > 0 ? (
           productReviews.map((review, index) => (
-            <div key={index} className="reviewItem">
+            <div
+              key={index}
+              className={`reviewItem ${
+                index === productReviews.length - 1 ? "lastItem" : ""
+              }`}
+            >
               <p className="reviewText">{review.text}</p>
-              <p className="reviewDate">
-                {new Date(review.createdAt).toLocaleDateString()}
-              </p>
             </div>
           ))
         ) : (

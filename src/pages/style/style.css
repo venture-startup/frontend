@@ -366,23 +366,19 @@ p {
   font-weight: bold;
 }
 
-/* 개별 리뷰 항목 스타일 */
 .reviewItem {
-  margin-bottom: 15px;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd; /* 리뷰 사이를 구분하는 줄 */
+}
+
+.reviewItem.lastItem {
+  border-bottom: none; /* 마지막 아이템은 줄을 제거 */
 }
 
 .reviewText {
   font-size: 16px;
   color: #333;
   margin-bottom: 5px;
-}
-
-.reviewDate {
-  font-size: 14px;
-  color: #777;
-  text-align: right;
 }
 
 .noReviews {
