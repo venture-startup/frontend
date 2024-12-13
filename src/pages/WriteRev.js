@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import './style/style.css';
-import Navigator from '../components/navigator/Navigator';
-import apiClient from '../api/apiClient';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import apiClient from "../api/apiClient";
+import Navigator from "../components/navigator/Navigator";
+import "./style/style.css";
 
 function WriteRev() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ function WriteRev() {
   const [showSingleInput, setShowSingleInput] = useState(false);
   const [isAiReviewActive, setIsAiReviewActive] = useState(false);
   const [showModal, setShowModal] = useState(false); // 모달 상태 추가
-  const [reviewText, setReviewText] = useState(''); // 텍스트 리뷰 상태
+  const [reviewText, setReviewText] = useState(""); // 텍스트 리뷰 상태
   const [aiReviewAnswers, setAiReviewAnswers] = useState({}); // AI 리뷰 답변 상태
 
   // 랜덤 리뷰 템플릿을 서버에서 받아오는 useEffect
@@ -25,7 +25,7 @@ function WriteRev() {
           const response = await apiClient.get(`/review/ai/${productId}`);
           setReviews(response.data); // 리뷰 데이터를 state에 저장
         } catch (err) {
-          console.error('Error fetching reviews:', err);
+          console.error("Error fetching reviews:", err);
         }
       };
 
@@ -50,7 +50,7 @@ function WriteRev() {
           (question) => ({
             question,
             answer: aiReviewAnswers[question],
-          }),
+          })
         );
 
         const response = await apiClient.post(`/review/ai`, {
@@ -64,13 +64,13 @@ function WriteRev() {
           productId: product.id,
           text: reviewText,
         });
-        navigate('/');
+        navigate("/");
       }
     } catch (err) {
-      console.error('Error submitting review:', err);
+      console.error("Error submitting review:", err);
     }
     setTimeout(() => {
-      setShowModal(false); // 3초 후 모달 숨김
+      setShowModal(false);
     }, 3000);
   };
 
@@ -110,7 +110,7 @@ function WriteRev() {
           <div className="leftDiv">
             <button
               className={`notActiveButton ${
-                isAiReviewActive ? 'activeButton' : ''
+                isAiReviewActive ? "activeButton" : ""
               }`}
               onClick={toggleInput}
             >
@@ -127,7 +127,7 @@ function WriteRev() {
                     <p className="subTitle">{review.question}</p>
                     <input
                       className="revTem"
-                      value={aiReviewAnswers[review.question] || ''}
+                      value={aiReviewAnswers[review.question] || ""}
                       onChange={(e) =>
                         handleAiReviewChange(review.question, e.target.value)
                       }
