@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import apiClient from "../api/apiClient";
-import Navigator from "../components/navigator/Navigator";
-import "./style/style.css";
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import apiClient from '../api/apiClient';
+import Navigator from '../components/navigator/Navigator';
+import './style/style.css';
 
 function WriteRev() {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ function WriteRev() {
   const [showSingleInput, setShowSingleInput] = useState(false);
   const [isAiReviewActive, setIsAiReviewActive] = useState(false);
   const [showModal, setShowModal] = useState(false); // 모달 상태 추가
-  const [reviewText, setReviewText] = useState(""); // 텍스트 리뷰 상태
+  const [reviewText, setReviewText] = useState(''); // 텍스트 리뷰 상태
   const [aiReviewAnswers, setAiReviewAnswers] = useState({}); // AI 리뷰 답변 상태
 
   // 랜덤 리뷰 템플릿을 서버에서 받아오는 useEffect
@@ -27,7 +27,7 @@ function WriteRev() {
           const response = await apiClient.get(`/review/ai/${productId}`);
           setReviews(response.data); // 리뷰 데이터를 state에 저장
         } catch (err) {
-          console.error("Error fetching reviews:", err);
+          console.error('Error fetching reviews:', err);
         }
       };
 
@@ -37,7 +37,7 @@ function WriteRev() {
           console.log(response.data);
           setProductReviews(response.data); // 기존 리뷰 데이터를 state에 저장
         } catch (err) {
-          console.error("Error fetching product reviews:", err);
+          console.error('Error fetching product reviews:', err);
         }
       };
 
@@ -63,7 +63,7 @@ function WriteRev() {
           (question) => ({
             question,
             answer: aiReviewAnswers[question],
-          })
+          }),
         );
 
         const response = await apiClient.post(`/review/ai`, {
@@ -77,10 +77,10 @@ function WriteRev() {
           productId: product.id,
           text: reviewText,
         });
-        navigate("/");
+        navigate('/');
       }
     } catch (err) {
-      console.error("Error submitting review:", err);
+      console.error('Error submitting review:', err);
     }
     setTimeout(() => {
       setShowModal(false);
@@ -114,7 +114,9 @@ function WriteRev() {
           />
           <div className="productInfo">
             <h2 className="productNameRev">{product.name}</h2>
-            <p className="productPriceRev">{product.price}</p>
+            <p className="productPriceRev">
+              {Number(product.price).toLocaleString()} 원
+            </p>
             <p className="productDescriptionRev">{product.description}</p>
           </div>
         </div>
@@ -123,7 +125,7 @@ function WriteRev() {
           <div className="leftDiv">
             <button
               className={`notActiveButton ${
-                isAiReviewActive ? "activeButton" : ""
+                isAiReviewActive ? 'activeButton' : ''
               }`}
               onClick={toggleInput}
             >
@@ -140,11 +142,11 @@ function WriteRev() {
                     <p className="subTitle">{review.question}</p>
                     <input
                       className="revTem"
-                      value={aiReviewAnswers[review.question] || ""}
+                      value={aiReviewAnswers[review.question] || ''}
                       onChange={(e) =>
                         handleAiReviewChange(review.question, e.target.value)
                       }
-                      placeholder={review.question}
+                      placeholder="답변을 작성해주세요"
                     />
                   </div>
                 ))}
@@ -152,7 +154,7 @@ function WriteRev() {
             ) : (
               <textarea
                 className="mainInputRev"
-                placeholder="리뷰를 작성하세요!"
+                placeholder="리뷰를 작성하세요"
                 value={reviewText}
                 onChange={handleReviewTextChange}
               />
@@ -162,11 +164,11 @@ function WriteRev() {
           <div className="temButtonDiv">
             {showSingleInput ? (
               <button className="mainButton" onClick={handleNavigateClick}>
-                AI 리뷰 생성!
+                AI 리뷰 생성
               </button>
             ) : (
               <button className="mainButton" onClick={handleNavigateClick}>
-                리뷰 작성!
+                리뷰 작성
               </button>
             )}
           </div>
@@ -181,22 +183,28 @@ function WriteRev() {
       </div>
 
       {/* 기존 리뷰 내역 표시 */}
-      <div className="existingReviews">
-        <h3>기존 리뷰</h3>
-        {productReviews.length > 0 ? (
-          productReviews.map((review, index) => (
-            <div
-              key={index}
-              className={`reviewItem ${
-                index === productReviews.length - 1 ? "lastItem" : ""
-              }`}
-            >
-              <p className="reviewText">{review.text}</p>
-            </div>
-          ))
-        ) : (
-          <p className="noReviews">등록된 리뷰가 없습니다.</p>
-        )}
+      <div className="reviewContainer">
+        <h1>리뷰 내역</h1>
+        <div className="existingReviews">
+          {productReviews.length > 0 ? (
+            productReviews.map((review, index) => (
+              <div
+                key={index}
+                className={`reviewItem ${
+                  index === productReviews.length - 1 ? 'lastItem' : ''
+                }`}
+              >
+                <div className="reviewHeader">
+                  <div className="userIcon"></div>
+                  <span className="userName">User {index + 1}</span>
+                </div>
+                <p className="reviewText">{review.text}</p>
+              </div>
+            ))
+          ) : (
+            <p className="noReviews">등록된 리뷰가 없습니다.</p>
+          )}
+        </div>
       </div>
     </div>
   );

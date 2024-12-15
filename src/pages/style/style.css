@@ -1,7 +1,6 @@
 @font-face {
   font-family: 'BMJUA';
-  src: url('/public/fonts/otf/BMJUA_otf.otf')
-    format('opentype');
+  src: url('/public/fonts/otf/BMJUA_otf.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -46,16 +45,19 @@ button {
   margin: 0;
   margin-top: 30px;
 }
+
 .subTitle {
   font-size: 22px;
   margin: 0;
 }
+
 .inputDiv {
   display: flex;
   margin-left: 5%;
   flex-direction: column;
   width: 80%;
 }
+
 .productInfo3 {
   font-size: 20px;
 }
@@ -85,8 +87,10 @@ button {
   margin-bottom: 10px;
   width: 100%;
   height: 400px;
-  padding: 10px; /* 내부 여백 */
-  resize: none; /* 크기 조절 불가능 */
+  padding: 10px;
+  /* 내부 여백 */
+  resize: none;
+  /* 크기 조절 불가능 */
 }
 
 .titleDiv {
@@ -97,6 +101,7 @@ button {
   display: flex;
   justify-content: right;
 }
+
 .mainButton {
   width: 30%;
   height: 60px;
@@ -197,6 +202,7 @@ p {
   margin-top: 20px;
   width: 100%;
 }
+
 /* WriteRev */
 .leftDiv {
   width: 520px;
@@ -212,14 +218,20 @@ p {
   margin-top: 10px;
   margin-bottom: 10px;
   height: 440px;
-  padding: 10px; /* 내부 여백 */
-  resize: none; /* 크기 조절 불가능 */
+  padding: 10px;
+  /* 내부 여백 */
+  resize: none;
+  /* 크기 조절 불가능 */
 }
+
 /* 활성화된 버튼 스타일 */
 .activeButton {
-  background-color: #007bff; /* 파란색 배경 */
-  color: #fff; /* 흰색 텍스트 */
+  background-color: #007bff;
+  /* 파란색 배경 */
+  color: #fff;
+  /* 흰색 텍스트 */
 }
+
 .notActiveButton {
   width: 30%;
   height: 60px;
@@ -257,11 +269,11 @@ p {
 /*제품 품목*/
 .productGrid {
   display: grid;
-  grid-template-columns: repeat(
-    5,
-    1fr
-  ); /* 가로 5개씩 배치 */
-  gap: 20px; /* 카드 간격 */
+  grid-template-columns: repeat(5,
+      1fr);
+  /* 가로 5개씩 배치 */
+  gap: 20px;
+  /* 카드 간격 */
   padding: 20px;
 }
 
@@ -305,20 +317,18 @@ p {
 }
 
 .productImageRev {
-  width: 500px;
-  height: 500px;
   object-fit: cover;
   border-radius: 8px;
 }
 
 .productNameRev {
-  font-size: 22px;
+  font-size: 32px;
   font-weight: bold;
   margin: 10px 0 5px;
 }
 
 .productPriceRev {
-  font-size: 18px;
+  font-size: 24px;
   color: #007bff;
   margin-bottom: 10px;
 }
@@ -334,17 +344,19 @@ p {
   flex-direction: row;
   width: 100%;
   justify-content: space-around;
+  gap: 32px;
 }
 
 .productDetails {
   display: flex;
+  flex-direction: column;
   flex: 3;
-  flex-direction: row;
   width: 40%;
+  margin-bottom: 100px;
 }
 
 .productInfo {
-  margin-left: 20px;
+  padding: 20px 0px;
 }
 
 .revForm {
@@ -352,42 +364,76 @@ p {
   flex-direction: column;
   justify-items: right;
   align-items: right;
-  flex: 1;
+  flex: 2;
+}
+
+.reviewContainer {
+  width: 100%;
+  border-top: 1px solid #a4a4a4;
+  align-self: flex-start;
 }
 
 /* 기존 리뷰 내역 컨테이너 스타일 */
 .existingReviews {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-.existingReviews h3 {
-  margin-bottom: 10px;
-  font-size: 18px;
-  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  /* 각 리뷰 간격 */
+  width: 100%;
 }
 
 .reviewItem {
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd; /* 리뷰 사이를 구분하는 줄 */
+  border: 1px solid #ddd;
+  /* 테두리 추가 */
+  border-radius: 8px;
+  /* 둥근 모서리 */
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* 그림자 효과 */
+  background-color: #f9f9f9;
+  /* 배경색 */
 }
 
-.reviewItem.lastItem {
-  border-bottom: none; /* 마지막 아이템은 줄을 제거 */
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  /* 사용자 정보와 리뷰 텍스트 간격 */
+}
+
+.userIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  /* 원형 아이콘 */
+  background-color: #ccc;
+  /* 기본 아이콘 배경색 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  /* 아이콘 안의 텍스트 크기 (사용 가능 시) */
+  color: white;
+  margin-right: 10px;
+  /* 사용자 이름과 간격 */
+}
+
+.userName {
+  font-weight: bold;
+  font-size: 16px;
+  /* 사용자 이름 폰트 크기 */
+  color: #333;
 }
 
 .reviewText {
-  font-size: 16px;
-  color: #333;
-  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+  /* 가독성을 위한 줄 간격 */
 }
 
 .noReviews {
+  text-align: center;
   font-size: 16px;
   color: #999;
-  text-align: center;
-  margin-top: 10px;
 }
