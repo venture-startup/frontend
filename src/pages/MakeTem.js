@@ -23,7 +23,9 @@ function MakeTem() {
       const productId = product.id; // productId를 product에서 가져옴
       const fetchReviews = async () => {
         try {
-          const response = await apiClient.get(`/review/ai/${productId}`);
+          const response = await apiClient.get(
+            `/review/ai/${productId}`
+          );
           setReviews(response.data); // 리뷰 데이터를 state에 저장
         } catch (err) {
           console.error('Error fetching reviews:', err);
@@ -62,7 +64,10 @@ function MakeTem() {
 
       {/* 버튼 */}
       <div className="temButtonDiv">
-        <button className="mainButton" onClick={handleButtonClick}>
+        <button
+          className="mainButton"
+          onClick={handleButtonClick}
+        >
           리뷰 템플릿 확인
         </button>
       </div>

@@ -1,6 +1,7 @@
 @font-face {
   font-family: 'BMJUA';
-  src: url('/public/fonts/otf/BMJUA_otf.otf') format('opentype');
+  src: url('/public/fonts/otf/BMJUA_otf.otf')
+    format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -172,7 +173,7 @@ p {
 
 .revDiv {
   width: 520px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .revTem {
@@ -217,7 +218,7 @@ p {
   font-family: 'BMJUA', Arial, sans-serif;
   margin-top: 10px;
   margin-bottom: 10px;
-  height: 440px;
+  height: 420px;
   padding: 10px;
   /* 내부 여백 */
   resize: none;
@@ -269,8 +270,7 @@ p {
 /*제품 품목*/
 .productGrid {
   display: grid;
-  grid-template-columns: repeat(5,
-      1fr);
+  grid-template-columns: repeat(5, 1fr);
   /* 가로 5개씩 배치 */
   gap: 20px;
   /* 카드 간격 */

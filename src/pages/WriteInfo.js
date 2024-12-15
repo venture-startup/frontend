@@ -37,7 +37,19 @@ function WriteInfo() {
       setFileName(file.name);
     }
   };
+  const formatPriceDisplay = (value) => {
+    // 숫자만 남기기
+    const numericValue = value.replace(/[^0-9]/g, '');
+    // 3자리마다 콤마 추가
+    return new Intl.NumberFormat().format(numericValue);
+  };
 
+  const handlePriceChange = (e) => {
+    // 입력값을 실시간으로 처리
+    const value = e.target.value;
+    const numericValue = value.replace(/[^0-9]/g, ''); // 숫자만 남기기
+    setProductPrice(numericValue); // 숫자 값만 상태로 저장
+  };
   const handleButtonClick = async () => {
     if (
       productName.trim() === '' ||
@@ -126,10 +138,12 @@ function WriteInfo() {
             <input
               type="text"
               className="productInput"
-              value={productPrice}
-              onChange={(e) =>
-                setProductPrice(e.target.value)
-              }
+              value={
+                productPrice !== ''
+                  ? formatPriceDisplay(productPrice)
+                  : ''
+              } // 화면에는 포맷된 값 표시
+              onChange={handlePriceChange} // 입력값 처리
               placeholder="제품 가격을 입력하세요"
             />
           </div>
