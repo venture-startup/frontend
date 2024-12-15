@@ -1,6 +1,7 @@
 @font-face {
-  font-family: "BMJUA";
-  src: url("/public/fonts/otf/BMJUA_otf.otf") format("opentype");
+  font-family: 'BMJUA';
+  src: url('/public/fonts/otf/BMJUA_otf.otf')
+    format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -22,7 +23,7 @@
 body,
 input,
 button {
-  font-family: "BMJUA", Arial, sans-serif;
+  font-family: 'BMJUA', Arial, sans-serif;
 }
 
 .main {
@@ -55,7 +56,7 @@ button {
   flex-direction: column;
   width: 80%;
 }
-.productInfo {
+.productInfo3 {
   font-size: 20px;
 }
 
@@ -79,7 +80,7 @@ button {
   border-radius: 20px;
   font-size: 20px;
   font-weight: 500;
-  font-family: "BMJUA", Arial, sans-serif;
+  font-family: 'BMJUA', Arial, sans-serif;
   margin-top: 10px;
   margin-bottom: 10px;
   width: 100%;
@@ -207,7 +208,7 @@ p {
   border-radius: 20px;
   font-size: 20px;
   font-weight: 500;
-  font-family: "BMJUA", Arial, sans-serif;
+  font-family: 'BMJUA', Arial, sans-serif;
   margin-top: 10px;
   margin-bottom: 10px;
   height: 440px;
@@ -256,7 +257,10 @@ p {
 /*제품 품목*/
 .productGrid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 가로 5개씩 배치 */
+  grid-template-columns: repeat(
+    5,
+    1fr
+  ); /* 가로 5개씩 배치 */
   gap: 20px; /* 카드 간격 */
   padding: 20px;
 }
